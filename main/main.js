@@ -1,7 +1,7 @@
-const {loadPromotions,loadAllItems} = require('./datbase');
-function printInventory(inputs) {
-    let specialItems=getSpecialItems();
+const {loadPromotions, loadAllItems} = require('./datbase');
 
+function printInventory(inputs) {
+    let specialItems = getSpecialItems();
 
 
     return 'Hello World!';
@@ -18,29 +18,43 @@ function getSpecialItems() {
 
 }
 
-function getProperty(barcode,propertyName){
-    let allItems=loadAllItems();
-    for(let i in allItems){
-        let curItem=allItems[i];
-        if (curItem.barcode===barcode){
+function getProperty(barcode, propertyName) {
+    let allItems = loadAllItems();
+    for (let i in allItems) {
+        let curItem = allItems[i];
+        if (curItem.barcode === barcode) {
             return curItem[propertyName]
         }
     }
 }
 
-function getAmount(singleInput){
-    let splitedInput=singleInput.split('-');
-    if (splitedInput.length<=1){
-        return [singleInput,1]
+function getAmount(singleInput) {
+    let splitedInput = singleInput.split('-');
+    if (splitedInput.length <= 1) {
+        return [singleInput, 1]
+    } else {
+        return [splitedInput[0], parseInt(splitedInput[1])]
     }
-    else {
-        return[splitedInput[0],parseInt(splitedInput[1])]
+}
+
+function calTotalAmount(inputs) {
+    let totalAmount = {};
+    for (let i in inputs) {
+        let curInput = inputs[i];
+        let curAmount=getAmount(curInput);
+        if(totalAmount.hasOwnProperty(curAmount[0])){
+            totalAmount[curAmount[0]]+=curAmount[1];
+        }else{
+            totalAmount[curAmount[0]]=curAmount[1];
+        }
     }
+    return totalAmount
 }
 
 module.exports = {
     printInventory: printInventory,
     getSpecialItems: getSpecialItems,
-    getProperty:getProperty,
-    getAmount:getAmount
+    getProperty: getProperty,
+    getAmount: getAmount,
+    calTotalAmount:calTotalAmount
 };

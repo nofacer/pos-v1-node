@@ -1,4 +1,4 @@
-const {printInventory,getSpecialItems,getProperty,getAmount} = require('../main/main');
+const {printInventory,getSpecialItems,getProperty,getAmount,calTotalAmount} = require('../main/main');
 
 describe('pos', function () {
 
@@ -33,8 +33,25 @@ describe('pos', function () {
         let result2=getAmount('ITEM000003-2');
         expect(result1).toEqual(['ITEM000001',1]);
         expect(result2).toEqual(['ITEM000003',2]);
+    });
+
+    it('get total amount of all stuff',function () {
+        let inputs=[
+            'ITEM000001',
+            'ITEM000001',
+            'ITEM000001',
+            'ITEM000001',
+            'ITEM000001',
+            'ITEM000003-2',
+            'ITEM000005',
+            'ITEM000005',
+            'ITEM000005'
+        ];
+        let result=calTotalAmount(inputs);
+        expect(result).toEqual({'ITEM000001':5,'ITEM000003':2,'ITEM000005':3});
 
     });
+
 
     it('should print correct text', function () {
 
