@@ -1,4 +1,4 @@
-const {printInventory,getSpecialItems,getProperty} = require('../main/main');
+const {printInventory,getSpecialItems,getProperty,getAmount} = require('../main/main');
 
 describe('pos', function () {
 
@@ -25,6 +25,14 @@ describe('pos', function () {
     it('get a certain property if barcode is provided',function () {
         let result=getProperty('ITEM000001','name');
         expect(result).toEqual('雪碧');
+
+    });
+
+    it('get item amount from a single input',function () {
+        let result1=getAmount('ITEM000001');
+        let result2=getAmount('ITEM000003-2');
+        expect(result1).toEqual(['ITEM000001',1]);
+        expect(result2).toEqual(['ITEM000003',2]);
 
     });
 

@@ -28,8 +28,19 @@ function getProperty(barcode,propertyName){
     }
 }
 
+function getAmount(singleInput){
+    let splitedInput=singleInput.split('-');
+    if (splitedInput.length<=1){
+        return [singleInput,1]
+    }
+    else {
+        return[splitedInput[0],parseInt(splitedInput[1])]
+    }
+}
+
 module.exports = {
     printInventory: printInventory,
     getSpecialItems: getSpecialItems,
-    getProperty:getProperty
+    getProperty:getProperty,
+    getAmount:getAmount
 };
