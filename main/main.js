@@ -1,4 +1,4 @@
-const {loadPromotions} = require('./datbase');
+const {loadPromotions,loadAllItems} = require('./datbase');
 function printInventory(inputs) {
     let specialItems=getSpecialItems();
 
@@ -18,7 +18,18 @@ function getSpecialItems() {
 
 }
 
+function getProperty(barcode,propertyName){
+    let allItems=loadAllItems();
+    for(let i in allItems){
+        let curItem=allItems[i];
+        if (curItem.barcode===barcode){
+            return curItem[propertyName]
+        }
+    }
+}
+
 module.exports = {
     printInventory: printInventory,
-    getSpecialItems: getSpecialItems
+    getSpecialItems: getSpecialItems,
+    getProperty:getProperty
 };

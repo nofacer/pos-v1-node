@@ -1,4 +1,4 @@
-const {printInventory,getSpecialItems} = require('../main/main');
+const {printInventory,getSpecialItems,getProperty} = require('../main/main');
 
 describe('pos', function () {
 
@@ -19,6 +19,12 @@ describe('pos', function () {
     it('get BUY_TWO_GET_ONE_FREE items',function () {
         let result=getSpecialItems();
         expect(result).toEqual(['ITEM000000', 'ITEM000001', 'ITEM000005']);
+
+    });
+
+    it('get a certain property if barcode is provided',function () {
+        let result=getProperty('ITEM000001','name');
+        expect(result).toEqual('雪碧');
 
     });
 
