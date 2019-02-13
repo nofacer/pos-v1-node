@@ -41,14 +41,30 @@ function calTotalAmount(inputs) {
     let totalAmount = {};
     for (let i in inputs) {
         let curInput = inputs[i];
-        let curAmount=getAmount(curInput);
-        if(totalAmount.hasOwnProperty(curAmount[0])){
-            totalAmount[curAmount[0]]+=curAmount[1];
-        }else{
-            totalAmount[curAmount[0]]=curAmount[1];
+        let curAmount = getAmount(curInput);
+        if (totalAmount.hasOwnProperty(curAmount[0])) {
+            totalAmount[curAmount[0]] += curAmount[1];
+        } else {
+            totalAmount[curAmount[0]] = curAmount[1];
         }
     }
     return totalAmount
+}
+
+function calDiscount(totalAmount) {
+    let discount={};
+    let specialItems = getSpecialItems();
+    for (let key in totalAmount) {
+        let curItem = key;
+        let curAmount = totalAmount[key];
+        if(specialItems.indexOf(curItem) > -1){
+            if(curAmount>=2){
+                discount[curItem]=1;
+            }
+        }
+
+    }
+    return discount
 }
 
 module.exports = {
@@ -56,5 +72,6 @@ module.exports = {
     getSpecialItems: getSpecialItems,
     getProperty: getProperty,
     getAmount: getAmount,
-    calTotalAmount:calTotalAmount
+    calTotalAmount: calTotalAmount,
+    calDiscount:calDiscount
 };
