@@ -1,4 +1,4 @@
-const {printInventory, getSpecialItems, getProperty, getAmount, calTotalAmount, calDiscount} = require('../main/main');
+const {printInventory, getSpecialItems, getProperty, getAmount, calTotalAmount, calDiscount, calFinalCost} = require('../main/main');
 
 describe('pos', function () {
 
@@ -67,6 +67,32 @@ describe('pos', function () {
         let totalAmount = calTotalAmount(inputs);
         let discount = calDiscount(totalAmount);
         expect(discount).toEqual({'ITEM000001': 1, 'ITEM000005': 1});
+
+    });
+
+    it('get all infos needed to be printed', function () {
+        let totalAmount = {'ITEM000001': 5, 'ITEM000003': 2, 'ITEM000005': 3};
+        let discount = {'ITEM000001': 1, 'ITEM000005': 1};
+        let result = calFinalCost(totalAmount, discount);
+        let expectResult = {
+            items:
+                {
+                    ITEM000001:
+                        {name: '雪碧', amount: 5, unit: '瓶', price: 3, totalCost: 12},
+                    ITEM000003:
+                        {name: '荔枝', amount: 2, unit: '斤', price: 15, totalCost: 30},
+                    ITEM000005:
+                        {name: '方便面', amount: 3, unit: '袋', price: 4.5, totalCost: 9}
+                },
+            discountItems:
+                {
+                    ITEM000001: {name: '雪碧', disAmount: 1, unit: '瓶'},
+                    ITEM000005: {name: '方便面', disAmount: 1, unit: '袋'}
+                },
+            needToPay: 51,
+            discountValue: 7.5
+        };
+        expect(result).toEqual(expectResult);
 
     });
 
